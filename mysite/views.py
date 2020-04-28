@@ -5,12 +5,13 @@ from  django.shortcuts import render
 def index(request):
     return render (request,'index.html')
 def analyze(request):
-    djtext= request.GET.get('text','default')
-    removepunc=request.GET.get('removepunc','off')
-    fullcaps = request.GET.get('fullcaps', 'off')
-    newlineremover = request.GET.get('newlineremover', 'off')
-    extraspaceremover = request.GET.get('extraspaceremover', 'off')
-    charcount = request.GET.get('charcount', 'off')
+    djtext= request.POST.get('text','default')
+    removepunc=request.POST.get('removepunc','off')
+    fullcaps = request.POST.get('fullcaps', 'off')
+    newlineremover = request.POST.get('newlineremover', 'off')
+    extraspaceremover = request.POST.get('extraspaceremover', 'off')
+    charcount = request.POST.get('charcount', 'off')
+
     if removepunc == "on":
         punctuations = '''!()-[]{};:'"\,<>./?@#$%^&*_~'''
         analyzed =""
@@ -18,7 +19,6 @@ def analyze(request):
             if char not in punctuations:
                 analyzed = analyzed + char
         params={'perpose':'removed punctuation','analyzed_text':analyzed}
-        #return render(request, 'analyze.html', params)
         djtext = analyzed
 
     if fullcaps == "on":
@@ -27,17 +27,13 @@ def analyze(request):
             analyzed = analyzed + char.upper()
         params = {'perpose': 'make upper case', 'analyzed_text': analyzed}
         djtext = analyzed
-       # return render(request, 'analyze.html', params)
 
     if newlineremover == "on":
         analyzed = ""
         for char in djtext:
             if char != "\n" and char!="\r":
                 analyzed = analyzed + char
-            else:
-                print("no")
         params = {'perpose': 'remover new line', 'analyzed_text': analyzed}
-    #    return render(request, 'analyze.html', params)
         djtext = analyzed
 
     if extraspaceremover == "on":
@@ -56,7 +52,6 @@ def analyze(request):
             analyzed = analyzed + char
         analyzed = [analyzed, 'no of count character is :- ', i]
         params = {'perpose': 'no of count is :-', 'analyzed_text': analyzed}
-        # return render(request, 'analyze.html', params)
         djtext = analyzed
 
     if (removepunc != "on" and newlineremover != "on" and extraspaceremover != "on" and fullcaps != "on" and charcount!= "on"):

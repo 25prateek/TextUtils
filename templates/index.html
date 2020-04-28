@@ -1,3 +1,4 @@
+#bootstrap user
 <!doctype html>
 <html lang="en">
   <head>
@@ -37,10 +38,10 @@
   </div>
 </nav>
 <div class="alert alert-success" role="alert">
-  <strong>text ultils</strong> you can change ur text
+  <strong>textultils</strong> you can change ur text
 </div>
 <div class="container">
-    <form action='/analyze' method="get">
+    <form action='/analyze' method="post">{% csrf_token %}
   <div class="form-group">
     <label for="exampleFormControlTextarea1">enter ur text here </label>
     <textarea name="text" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
